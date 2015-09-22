@@ -11,12 +11,24 @@ import UIKit
 class KeyboardViewController: UIInputViewController {
 
     @IBOutlet var nextKeyboardButton: UIButton!
+    @IBOutlet weak var deleteKey: UIButton!
+    @IBOutlet weak var returnKey: UIButton!
   
     var keyboardView: UIView!
   
     @IBAction func keyPressed(button: UIButton) {
         let proxy = textDocumentProxy as UITextDocumentProxy
         proxy.insertText((button.titleLabel?.text)!)
+    }
+    
+    func deleteKeyPressed() {
+        let proxy = textDocumentProxy as UITextDocumentProxy
+        proxy.deleteBackward()
+    }
+    
+    @IBAction func returnKeyPressed() {
+        let proxy = textDocumentProxy as UITextDocumentProxy
+        proxy.insertText("\n")
     }
 
     override func updateViewConstraints() {
@@ -50,7 +62,7 @@ class KeyboardViewController: UIInputViewController {
         view.addSubview(keyboardView)
         view.backgroundColor = keyboardView.backgroundColor
         nextKeyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside) // advanceToNextInputMode is already defined in template
-      
+        deleteKey.addTarget(self, action: "deleteKeyPressed", forControlEvents: .TouchUpInside)
     }
 
 
